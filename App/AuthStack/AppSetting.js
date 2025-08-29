@@ -37,17 +37,7 @@ const AppSetting = () => {
     let navigation = useNavigation();
     let dispatch = useDispatch();
     let { showToast } = useCustomToast();
-
     const [loading, setLoading] = useState(false);
-    // AED
-    // const [email, setEmail] = useState("haiderbadsha@yopmail.com");
-    // const [password, setPassword] = useState("123456");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    // USD
-    // const [email, setEmail] = useState("hg1@yopmail.com");
-    // const [password, setPassword] = useState("abc123");
-
     const selectedLanguage = useSelector((state) => state.home.selectedLanguage);
 
     useEffect(() => {
@@ -81,27 +71,29 @@ const AppSetting = () => {
         }
     }
 
-    // useEffect(() => {
-    //     getLangData().then((result) => {
-    //         console.log("getLangData>>>>>>>>>>>>", result);
-    //         if (result == null) {
-    //             setAppLanguage("en");
-    //         } else {
-    //             dispatch(setSelectedLanguage(result));
-    //             setAppLanguage(result == "fr" ? "fr" : "en");
-    //         }
-    //     });
-    // }, []);
+    useEffect(() => {
+        getLangData().then((result) => {
+            console.log("getLangData>>>>>>>>>>>>", result);
+            if (result == null) {
+                setAppLanguage("en");
+                setValue('en')
+            } else {
+                dispatch(setSelectedLanguage(result));
+                setAppLanguage(result == "fr" ? "fr" : "en");
+                setValue(result)
+            }
+        });
+    }, []);
 
-    // const getLangData = async () => {
-    //     try {
-    //         return await AsyncStorage.getItem("lang");
-    //     } catch (e) {
-    //         // read error
-    //     }
+    const getLangData = async () => {
+        try {
+            return await AsyncStorage.getItem("lang");
+        } catch (e) {
+            // read error
+        }
 
-    //     console.log("Done.");
-    // };
+        console.log("Done.");
+    };
 
     return (
         <SafeAreaView style={[CustomStyle.SafeAreaStyle, {}]}>
