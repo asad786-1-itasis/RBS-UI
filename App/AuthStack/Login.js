@@ -94,7 +94,7 @@ const Login = () => {
       //       // showToast('Login Successfull');
       //       setLoading(false);
       //       dispatch(setLoginData(result?.data));
-      //       dispatch(setLogin(true));
+            dispatch(setLogin(true));
       //     } else {
       //       showToast(result?.message);
       //       setLoading(false);
