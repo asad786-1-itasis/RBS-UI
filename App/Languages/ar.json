@@ -1,0 +1,158 @@
+{
+    "settings": "الإعدادات",
+    "generalSetting": "الإعدادات العامة",
+    "wishList": "قائمة الرغبات",
+    "languagePreference": "تفضيل اللغة",
+    "getNotification": "تلقي الإشعارات",
+    "orderDetails": "تفاصيل الطلب",
+    "rateTheApp": "قيم التطبيق",
+    "orderHistory": "تاريخ الطلبات",
+    "logout": "تسجيل الخروج",
+    "item": "منتج",
+
+
+    "cart": "عربة التسوق",
+    "checkOut": "الدفع",
+    "enter": "أدخل",
+    "product": "منتج",
+    "total": "إجمالي",
+    "clearCart": "مسح السلة",
+
+
+
+    "helloWelcome": "مرحباً، أهلاً وسهلاً",
+    "allCollection": "جميع المجموعات",
+    "seeAll": "عرض الكل",
+    "newArrival": "وصول جديد",
+    "allProducts": "جميع المنتجات",
+    "noRecordFound": "لم يتم العثور على سجلات",
+    "productDetail": "تفاصيل المنتج",
+    "selectColor": "اختر اللون",
+    "selectSize": "اختر المقاس",
+    "addToCart": "أضف إلى السلة",
+    "totalPrice": "السعر الإجمالي",
+
+
+    "emailAddress": "عنوان البريد الإلكتروني",
+    "enterEmailAddress": "أدخل عنوان البريد الإلكتروني",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "login": "تسجيل الدخول",
+    "dontHaveAnAccount": "ليس لديك حساب؟",
+    "signUp": "التسجيل",
+    "password": "كلمة المرور",
+
+
+    "firstName": "الاسم الأول",
+    "lastName": "الاسم الأخير",
+    "selectCountry": "اختر البلد",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "alreadyHaveAnAccount": "هل لديك حساب؟",
+    "signIn": "تسجيل الدخول",
+
+
+
+
+    "home": "الصفحة الرئيسية",
+    "search": "بحث",
+    "more": "المزيد",
+
+
+
+    "enterName": "أدخل الاسم",
+    "enterFirstName": "دخل الاسم الأول",
+    "enterLastName": "أدخل اسم العائلة",
+    "enterPassword": "أدخل كلمة المرور",
+    "enterConfirmPassword": "أدخل تأكيد كلمة المرور",
+
+
+    "passwordResetMessage": "سنرسل لك رسالة لتعيين أو إعادة تعيين كلمة المرور الجديدة الخاصة بك.",
+    "forgotPasswords": "نسيت كلمة المرور",
+    "sendOTP": "أرسل رمز التحقق",
+
+    "otpVerification": "التحقق من رمز التحقق",
+    "enterCode": "أدخل الرمز المكون من 6 أرقام الذي أرسلناه للتو إلى",
+    "didNotReceiveCode": "لم تستلم الرمز؟",
+    "resendCode": "إعادة إرسال الرمز",
+    "verify": "تحقق",
+
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "newPassword": "كلمة مرور جديدة",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "passwordMismatch": "كلمة المرور غير متطابقة",
+
+    "editInfo": "تعديل المعلومات",
+    "changePassword": "تغيير كلمة المرور",
+    "delete": "حذف",
+    "ok": "حسنًا",
+    "update": "تحديث",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "myAccount": "حسابي",
+    "message": "رسالة",
+    "typeSomething": "...اكتب شيئًا",
+    "submit": "إرسال",
+    "areYouSure": "هل أنت متأكد",
+    "youWantToProceed": "أنك تريد المتابعة؟",
+    "oldPassword": "كلمة المرور القديمة",
+
+
+
+    "all": "الكل",
+    "toPay": "للدفع",
+    "toShip": "للتوصيل",
+    "toReceive": "للاستلام",
+    "orderNumber": "رقم الطلب",
+    "placedOn": "تمت في",
+
+    "estimatedDelivery": "التوصيل المتوقع:",
+    "addReview": "أضف مراجعة",
+    "trackMyOrder": "تتبع طلبي",
+    "invoice": "الفاتورة",
+    "color": "اللون",
+    "size": "الحجم",
+    "qty": "الكمية",
+    "deliveryStatus": "حالة التوصيل",
+    "trackOrder": "تتبع الطلب",
+    "pending": "قيد الانتظار",
+    "processing": "قيد المعالجة",
+    "shipped": "تم الشحن",
+    "delivered": "تم التوصيل",
+    "cancelled": "ملغي",
+
+
+    "addAddress": "إضافة عنوان",
+    "addShippingAddress": "إضافة عنوان الشحن",
+    "editShippingAddress": "تعديل عنوان الشحن",
+    "address": "العنوان",
+    "city": "المدينة",
+    "stateRegion": "الولاية / المنطقة",
+    "postalCode": "الرمز البريدي",
+    "phoneNo": "رقم الهاتف",
+    "addressTitle": "عنوان العنوان",
+    "enterAddress": "أدخل العنوان",
+    "enterCity": "أدخل المدينة",
+    "enterStateRegion": "أدخل الولاية / المنطقة",
+    "enterPostalCode": "أدخل الرمز البريدي",
+    "enterPhoneNo": "أدخل رقم الهاتف",
+    "enterAddressTitle": "أدخل عنوان العنوان",
+     "rateProduct": "قيم هذا المنتج",
+  "leaveComment": "...اترك تعليقًا",
+  "discount": "خصم"
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+  }
+  
