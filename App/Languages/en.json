@@ -119,5 +119,9 @@
   "phoneNumber": "Phone number",
   "welcomeToRBS": "Welcome to RBS",
   "selectLanguage": "Select your language",
-  "contactToAdmin": "Contact to admin"
+  "contactToAdmin": "Contact to admin",
+  "loginWithFaceFingure": "🔐 Login with Face/Fingureprint",
+  "enableBiometric": "Enable Biometric Login",
+  "biometricIsAlready": "Biometric is already registered. You can authenticate below.",
+  "registerYourBiometrics": "Register your biometrics to enable secure login."
 }

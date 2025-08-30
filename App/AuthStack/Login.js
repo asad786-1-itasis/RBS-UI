@@ -94,7 +94,7 @@ const Login = () => {
       //       // showToast('Login Successfull');
       //       setLoading(false);
       //       dispatch(setLoginData(result?.data));
-            dispatch(setLogin(true));
+      dispatch(setLogin(true));
       //     } else {
       //       showToast(result?.message);
       //       setLoading(false);
@@ -157,6 +157,7 @@ const Login = () => {
                   placeholder={t("emailAddress")}
                   value={email}
                   onChangeText={setEmail}
+                  allowFontScaling={false}   // 👈 yahan add kar do
                 />
                 <CustomText
                   style={{
@@ -187,6 +188,7 @@ const Login = () => {
                     value={password}
                     secureTextEntry={showPassword ? false : true}
                     onChangeText={setPassword}
+                    allowFontScaling={false}
                   />
                   <TouchableOpacity onPress={handleShowPass}>
                     <Feather
@@ -225,6 +227,23 @@ const Login = () => {
                 </TouchableOpacity>
               </Animatable.View>
             </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FaceFingure')}
+              style={styles.signUpButton}
+            >
+              <CustomText
+                style={{
+                  fontSize: moderateScale(14),
+                  paddingVertical: moderateScale(10),
+                  fontWeight: "700",
+                  color: Colors.black,
+                  paddingLeft: 5,
+                  textAlign: "center",
+                }}
+              >
+                {t("loginWithFaceFingure")}
+              </CustomText>
+            </TouchableOpacity>
             <View style={{ flex: 0.4, justifyContent: "flex-end", }}>
               <View style={styles.textContainer}>
                 <CustomText
@@ -251,12 +270,18 @@ const Login = () => {
                     {t("signUp")}
                   </CustomText>
                 </TouchableOpacity>
+
               </View>
+
+
+
             </View>
+
+
           </View>
         </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
@@ -317,5 +342,15 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16),
     color: '#6f60bf',
     fontWeight: '500'
+  },
+  signUpButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 2,
+    flex: 1,
+    justifyContent: "center",
+    borderColor: Colors.BtnClr,
+    borderRadius: moderateScale(10),
+    marginTop: moderateScale(20),
   }
 });

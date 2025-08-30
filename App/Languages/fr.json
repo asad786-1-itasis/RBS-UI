@@ -119,5 +119,9 @@
     "phoneNumber": "Numéro de téléphone",
     "welcomeToRBS": "Bienvenue chez RBS",
     "selectLanguage": "Sélectionnez votre langue",
-    "contactToAdmin": "Contacter l'administrateur"
+    "contactToAdmin": "Contacter l'administrateur",
+    "loginWithFaceFingure": "🔐 Connexion avec la reconnaissance faciale/empreinte digitale",
+    "enableBiometric": "Activer la connexion biométrique",
+    "biometricIsAlready": "La biométrie est déjà enregistrée. Veuillez vous authentifier ci-dessous.",
+    "registerYourBiometrics": "Enregistrez vos données biométriques pour activer la connexion sécurisée."
 }

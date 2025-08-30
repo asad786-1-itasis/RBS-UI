@@ -83,6 +83,7 @@ import { ToastProvider } from "react-native-toast-notifications";
 import { moderateScale } from "react-native-size-matters";
 import LanguageTranslator from "./App/LanguageTranslator";
 import AppSetting from "./App/AuthStack/AppSetting";
+import FaceFingure from "./App/AuthStack/FaceFingure";
 
 const Stack = createStackNavigator();
 
@@ -98,6 +99,11 @@ function AuthStack() {
         options={{ headerShown: false }}
         name="Login"
         component={Login}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="FaceFingure"
+        component={FaceFingure}
       />
 
       <Stack.Screen
