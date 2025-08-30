@@ -13,6 +13,7 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 import Octicons from "react-native-vector-icons/Octicons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -52,106 +53,7 @@ import OrderDetail from "../Setting/OrderDetail";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const iconSize = moderateScale(21);
-function SearchStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="MainSearch"
-        component={MainSearch}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="SearchedData"
-        component={SearchedData}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ProductDetail"
-        component={ProductDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="CartScreen"
-        component={CartScreen}
-      />
 
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="SeeAllProducts"
-        component={SeeAllProducts}
-      />
-    </Stack.Navigator>
-  );
-}
-function SettingStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="SettingsScreen"
-        component={SettingsScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="OrderHistory"
-        component={OrderHistory}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ChangePassword"
-        component={ChangePassword}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="EditInfo"
-        component={EditInfo}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="RateApp"
-        component={RateApp}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="MyAccount"
-        component={MyAccount}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="DeliveryStatusScreen"
-        component={DeliveryStatusScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="OrderDetail"
-        component={OrderDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="WishList"
-        component={WishList}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ProductDetail"
-        component={ProductDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="CartScreen"
-        component={CartScreen}
-      />
-      {/* <Stack.Screen
-        options={{ headerShown: false }}
-        name="TimelineScreen"
-        component={TimelineScreen}
-      /> */}
-
-      {/* auth End */}
-    </Stack.Navigator>
-  );
-}
 function HomeStack() {
   return (
     <Stack.Navigator>
@@ -160,95 +62,17 @@ function HomeStack() {
         name="Home"
         component={Home}
       />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="SeeAllProducts"
-        component={SeeAllProducts}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ProductDetail"
-        component={ProductDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="CartScreen"
-        component={CartScreen}
-      />
     </Stack.Navigator>
   );
 }
 
-function CartStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="CartScreen"
-        component={CartScreen}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ProductDetail"
-        component={ProductDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="CardDetail"
-        component={CardDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="PaymentMethod"
-        component={PaymentMethod}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="PaymentSuccess"
-        component={PaymentSuccess}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ShippingAddressDetail"
-        component={ShippingAddressDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="AddEditAddress"
-        component={AddEditAddress}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function WishListStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="WishList"
-        component={WishList}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ProductDetail"
-        component={ProductDetail}
-      />
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="CartScreen"
-        component={CartScreen}
-      />
-    </Stack.Navigator>
-  );
-}
 
 function BottomNavigation() {
   const selectedLanguage = useSelector((state) => state.home.selectedLanguage);
 
   useEffect(() => {
-    if (selectedLanguage == "AR") {
-      setAppLanguage("ar");
+    if (selectedLanguage == "fr") {
+      setAppLanguage("fr");
     } else {
       setAppLanguage("en");
     }
@@ -259,8 +83,8 @@ function BottomNavigation() {
       initialRouteName="Home"
       screenOptions={{
         tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: "#F0F0F0",
+        tabBarActiveTintColor: Colors.activeClr,
+        tabBarInactiveTintColor: 'grey',
         tabBarLabelStyle: {
           fontSize: moderateScale(12),
           fontFamily: Fonts.JOST,
@@ -268,10 +92,10 @@ function BottomNavigation() {
         tabBarStyle: {},
       }}
 
-      //   sceneContainerStyle={{backgroundColor: 'red'}}
+    //   sceneContainerStyle={{backgroundColor: 'red'}}
     >
       <Tab.Screen
-        name="Homes"
+        name="Home"
         component={HomeStack}
         options={({ route }) => ({
           tabBarStyle: [
@@ -294,15 +118,15 @@ function BottomNavigation() {
                 name={"shop"}
                 size={iconSize}
                 // color={colorScheme ==='dark'? focused ?Colors.primary : 'white':focused ?Colors.primary : 'black'}
-                color={focused ? Colors.primary : "#F0F0F0"}
+                color={focused ? Colors.activeClr : "grey"}
               />
             </View>
           ),
         })}
       />
       <Tab.Screen
-        name="Search"
-        component={SearchStack}
+        name="Chat"
+        component={HomeStack}
         options={({ route }) => ({
           tabBarStyle: [
             styles.tabStyle,
@@ -321,18 +145,18 @@ function BottomNavigation() {
 
           tabBarIcon: ({ focused }) => (
             <View style={{ marginTop: moderateScale(1) }}>
-              <Octicons
-                name={"search"}
+              <Ionicons
+                name={"chatbubble-ellipses-outline"}
                 size={iconSize}
-                color={focused ? Colors.primary : "#F0F0F0"}
+                color={focused ? Colors.activeClr : "grey"}
               />
             </View>
           ),
         })}
       />
       <Tab.Screen
-        name="Wishlist"
-        component={WishListStack}
+        name="Invoice"
+        component={HomeStack}
         options={({ route }) => ({
           tabBarStyle: [
             styles.tabStyle,
@@ -352,17 +176,18 @@ function BottomNavigation() {
           tabBarIcon: ({ focused }) => (
             <View style={{ marginTop: moderateScale(1) }}>
               <Feather
-                name={"shopping-bag"}
+                name={"file-text"}
                 size={iconSize}
-                color={focused ? Colors.primary : "#F0F0F0"}
+                // color={colorScheme ==='dark'? focused ?Colors.primary : 'white':focused ?Colors.primary : 'black'}
+                color={focused ? Colors.activeClr : "grey"}
               />
             </View>
           ),
         })}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Cart"
-        component={CartStack}
+        component={HomeStack}
         options={({ route }) => ({
           tabBarStyle: [
             styles.tabStyle,
@@ -384,7 +209,7 @@ function BottomNavigation() {
               <Entypo
                 name={"shopping-cart"}
                 size={iconSize}
-                color={focused ? Colors.primary : "#F0F0F0"}
+                color={focused ? Colors.activeClr : "grey"}
               />
             </View>
           ),
@@ -392,7 +217,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingStack}
+        component={HomeStack}
         options={({ route }) => ({
           tabBarStyle: [
             styles.tabStyle,
@@ -414,12 +239,12 @@ function BottomNavigation() {
               <AntDesign
                 name={"setting"}
                 size={iconSize}
-                color={focused ? Colors.primary : "#F0F0F0"}
+                color={focused ? Colors.activeClr : "grey"}
               />
             </View>
           ),
         })}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

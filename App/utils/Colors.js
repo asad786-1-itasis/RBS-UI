@@ -3,6 +3,7 @@ export const Colors = {
   background: '#e1e8ff',
   primary: '#e5e7eb',
   BtnClr: '#2563eb',
+  activeClr: '#2563eb',
   white: 'white',
   black: 'black',
   textInputClr: 'white',
