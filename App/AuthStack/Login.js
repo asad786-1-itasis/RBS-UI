@@ -41,11 +41,11 @@ const Login = () => {
   // AED
   // const [email, setEmail] = useState("haiderbadsha@yopmail.com");
   // const [password, setPassword] = useState("123456");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   // USD
-  // const [email, setEmail] = useState("hg1@yopmail.com");
-  // const [password, setPassword] = useState("abc123");
+  const [email, setEmail] = useState("hg1@yopmail.com");
+  const [password, setPassword] = useState("abc123");
 
   const selectedLanguage = useSelector((state) => state.home.selectedLanguage);
 
