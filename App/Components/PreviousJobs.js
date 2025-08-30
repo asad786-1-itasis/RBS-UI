@@ -377,10 +377,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(5),
   },
   jobCard: {
-    width: width * 0.45,
+    width: width * 0.65, // ✅ Card ki width badh gayi (65%)
     borderRadius: moderateScale(12),
     padding: moderateScale(16),
-    height: moderateScale(220),
+    height: moderateScale(300),
     justifyContent: 'space-between',
     shadowColor: "#000",
     shadowOffset: {
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.15,
     shadowRadius: 6,
-    elevation: 6,
+    // elevation: 6,
   },
   cardSeparator: {
     width: moderateScale(15),
