@@ -48,6 +48,7 @@ import AddEditAddress from "../Cart/AddEditAddress";
 import { useSelector } from "react-redux";
 import { t, setAppLanguage } from "../Languages/translations";
 import OrderDetail from "../Setting/OrderDetail";
+import AdminChat from "../ChatStack/AdminChat";
 // import TimelineScreen from "../Components/TimelineScreen";
 
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,17 @@ function HomeStack() {
         options={{ headerShown: false }}
         name="Home"
         component={Home}
+      />
+    </Stack.Navigator>
+  );
+}
+function ChatStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="AdminChat"
+        component={AdminChat}
       />
     </Stack.Navigator>
   );
@@ -126,7 +138,7 @@ function BottomNavigation() {
       />
       <Tab.Screen
         name="Chat"
-        component={HomeStack}
+        component={ChatStack}
         options={({ route }) => ({
           tabBarStyle: [
             styles.tabStyle,
