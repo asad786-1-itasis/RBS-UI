@@ -36,7 +36,7 @@ const AttendanceList = ({ attendanceRecords }) => {
       case 'breakstart':
         return '#FF9800';
       case 'breakend':
-        return '#795548';
+        return 'blue';
       default:
         return Colors.gray;
     }
@@ -71,7 +71,7 @@ const AttendanceList = ({ attendanceRecords }) => {
               color={Colors.white}
             />
           </View>
-          
+
           <View style={styles.contentSection}>
             <CustomText style={styles.actionText}>
               {getActionText(item.type)}
@@ -129,11 +129,11 @@ const AttendanceList = ({ attendanceRecords }) => {
           data={attendanceRecords}
           renderItem={renderAttendanceItem}
           keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={true}
           ListEmptyComponent={renderEmptyComponent}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          style={{ maxHeight: moderateScale(280) }}
+          style={{ height: moderateScale(280) }}
+          nestedScrollEnabled={true}   // 👈 ye add karo
         />
       </View>
     </View>

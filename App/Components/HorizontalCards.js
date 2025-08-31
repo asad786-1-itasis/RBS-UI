@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -67,6 +67,17 @@ const HorizontalCards = () => {
     },
   ];
 
+
+// Component ke andar
+const progressCache = useRef({}); // ✅ useRef use karo
+
+const getProgressWidth = (itemId) => {
+  if (!progressCache.current[itemId]) {
+    progressCache.current[itemId] = `${Math.random() * 70 + 30}%`;
+  }
+  return progressCache.current[itemId];
+};
+
   const renderTaskCard = ({ item, index }) => (
     <Animatable.View
       animation="fadeInUp"
@@ -129,18 +140,20 @@ const HorizontalCards = () => {
 
         {/* Progress Bar */}
         <View style={styles.progressContainer}>
+        <View style={styles.progressContainer}>
           <View style={styles.progressBar}>
             <View 
               style={[
                 styles.progressFill, 
                 { 
                   backgroundColor: item.buttonColor,
-                  width: item.statusType === 'overdue' ? '100%' : `${Math.random() * 70 + 30}%`
+                  width: item.statusType === 'overdue' ? '100%' : getProgressWidth(item.id)
                 }
               ]} 
             />
           </View>
         </View>
+</View>
 
         {/* View Details Button */}
         <TouchableOpacity 
@@ -164,7 +177,7 @@ const HorizontalCards = () => {
         contentContainerStyle={styles.listContent}
         ItemSeparatorComponent={() => <View style={styles.cardSeparator} />}
         decelerationRate="fast"
-        snapToInterval={width * 0.65 + moderateScale(15)}
+        snapToInterval={width * 0.65 + moderateScale(30)}
         snapToAlignment="start"
       />
     </View>
@@ -194,7 +207,7 @@ const styles = StyleSheet.create({
     width: width * 0.65,
     borderRadius: moderateScale(12),
     padding: moderateScale(20),
-    height: moderateScale(200),
+    height: moderateScale(250),
     justifyContent: 'space-between',
   },
   cardSeparator: {

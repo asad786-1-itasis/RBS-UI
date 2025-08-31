@@ -1,41 +1,28 @@
 import {
-  Alert,
-  Image,
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import CustomStyle from "../utils/CustomStyle";
 import CustomText from "../Components/CustomText";
-import images from "../utils/images";
 import { moderateScale } from "react-native-size-matters";
 import Colors from "../utils/Colors";
 import Feather from "react-native-vector-icons/Feather";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useDispatch, useSelector } from "react-redux";
-import CustomStatusBar from "../utils/CustomStatusBar";
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import { useCustomToast } from "../utils/ToastNofticiation";
-import Loader from "../utils/Loader";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { t } from "../Languages/translations";
-import HorizontalCards from "../Components/HorizontalCards";
 import AttendanceList from "../Components/AttendanceList";
+import HorizontalCards from "../Components/HorizontalCards";
 import PreviousJobs from "../Components/PreviousJobs";
 
 const Home = () => {
   let navigation = useNavigation();
-  let dispatch = useDispatch();
   let { showToast } = useCustomToast();
   
-  const [loading, setLoading] = useState(false);
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const [isOnBreak, setIsOnBreak] = useState(false);
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -43,6 +30,9 @@ const Home = () => {
   const [currentBreakStartTime, setCurrentBreakStartTime] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [totalWorkingHours, setTotalWorkingHours] = useState("00:00:00");
+  const [totalBreakTime, setTotalBreakTime] = useState("00:00:00");
+  const [statusText, setStatusText] = useState("Checked Out");
+  const [statusColor, setStatusColor] = useState("#9e9e9e");
 
   // Update time every second
   useEffect(() => {
@@ -58,7 +48,7 @@ const Home = () => {
       hour: '2-digit', 
       minute: '2-digit', 
       second: '2-digit',
-      hour12: true 
+      hour12: false 
     });
   };
 
@@ -74,6 +64,7 @@ const Home = () => {
 
   // Calculate time difference in HH:MM:SS format
   const calculateTimeDifference = (startTime, endTime) => {
+    if (!startTime) return "00:00:00";
     const diff = endTime.getTime() - startTime.getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -91,6 +82,8 @@ const Home = () => {
     const now = new Date();
     setIsCheckedIn(true);
     setCurrentCheckInTime(now);
+    setStatusText("Checked In");
+    setStatusColor("#4CAF50");
     
     const newRecord = {
       id: Date.now().toString(),
@@ -112,17 +105,16 @@ const Home = () => {
       return;
     }
 
-    if (isOnBreak) {
-      showToast("Please end break first!", "error");
-      return;
-    }
-
     const now = new Date();
     const workingHours = calculateTimeDifference(currentCheckInTime, now);
     
     setIsCheckedIn(false);
+    setIsOnBreak(false);
     setCurrentCheckInTime(null);
+    setCurrentBreakStartTime(null);
     setTotalWorkingHours(workingHours);
+    setStatusText("Checked Out");
+    setStatusColor("#9e9e9e");
 
     const newRecord = {
       id: Date.now().toString(),
@@ -153,6 +145,8 @@ const Home = () => {
     const now = new Date();
     setIsOnBreak(true);
     setCurrentBreakStartTime(now);
+    setStatusText("On Break");
+    setStatusColor("#FF9800");
 
     const newRecord = {
       id: Date.now().toString(),
@@ -179,6 +173,9 @@ const Home = () => {
     
     setIsOnBreak(false);
     setCurrentBreakStartTime(null);
+    setTotalBreakTime(breakDuration);
+    setStatusText("Working");
+    setStatusColor("#4CAF50");
 
     const newRecord = {
       id: Date.now().toString(),
@@ -196,7 +193,6 @@ const Home = () => {
 
   return (
     <SafeAreaView style={[CustomStyle.SafeAreaStyle, {}]}>
-      <CustomStatusBar />
       <KeyboardAwareScrollView
         style={{
           flex: 1,
@@ -220,92 +216,158 @@ const Home = () => {
               >
                 <Feather name="arrow-left" size={24} color={Colors.black} />
               </TouchableOpacity>
-              <CustomText style={styles.headerTitle}>Worker</CustomText>
+       
               <TouchableOpacity style={styles.profileButton}>
                 <Feather name="user" size={24} color={Colors.black} />
               </TouchableOpacity>
             </View>
           </Animatable.View>
 
-          {/* Clock Display */}
-          <Animatable.View animation={"fadeInUp"} duration={600} delay={200}>
-            <View style={styles.clockContainer}>
-              <CustomText style={styles.currentTimeText}>
-                {getFormattedTime(currentTime)}
-              </CustomText>
-              <CustomText style={styles.currentDateText}>
-                {getFormattedDate(currentTime)}
-              </CustomText>
-              {totalWorkingHours !== "00:00:00" && isCheckedIn && (
-                <CustomText style={styles.workingHoursText}>
-                  Working Hours: {calculateTimeDifference(currentCheckInTime, currentTime)}
-                </CustomText>
-              )}
-              {isOnBreak && (
-                <CustomText style={styles.breakTimeText}>
-                  Break Time: {calculateTimeDifference(currentBreakStartTime, currentTime)}
-                </CustomText>
-              )}
+          {/* Status Indicator */}
+          <Animatable.View animation={"fadeInUp"} duration={600} delay={100}>
+            <View style={styles.statusContainer1}>
+              <CustomText style={styles.headerTitle}>Employee Time Clock</CustomText>
+              <View style={styles.statusContainer}>
+                <View style={[styles.statusIndicator, {backgroundColor: statusColor}]} />
+                <CustomText style={styles.statusText}>{statusText}</CustomText>
+              </View>
             </View>
           </Animatable.View>
 
-          {/* Check In/Out and Break Buttons */}
-          <Animatable.View animation={"fadeInUp"} duration={600} delay={400}>
-            <View style={styles.buttonContainer}>
-              <View style={styles.topButtonRow}>
-                <TouchableOpacity
-                  onPress={handleCheckIn}
-                  style={[
-                    styles.actionButton,
-                    styles.checkInButton,
-                    isCheckedIn && styles.disabledButton
-                  ]}
-                  disabled={isCheckedIn}
-                >
-                  <Feather name="log-in" size={20} color={Colors.white} />
-                  <CustomText style={styles.buttonText}>Check In</CustomText>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={handleCheckOut}
-                  style={[
-                    styles.actionButton,
-                    styles.checkOutButton,
-                    (!isCheckedIn || isOnBreak) && styles.disabledButton
-                  ]}
-                  disabled={!isCheckedIn || isOnBreak}
-                >
-                  <Feather name="log-out" size={20} color={Colors.white} />
-                  <CustomText style={styles.buttonText}>Check Out</CustomText>
-                </TouchableOpacity>
+          {/* Combined Container - Clock, Total Today, Buttons, and Time Breakdown */}
+          <Animatable.View animation={"fadeInUp"} duration={600} delay={200}>
+            <View style={styles.combinedContainer}>
+              
+              {/* Clock Display */}
+              <View style={styles.clockSection}>
+                <CustomText style={styles.currentTimeText}>
+                  {getFormattedTime(currentTime)}
+                </CustomText>
+                <CustomText style={styles.currentDateText}>
+                  {getFormattedDate(currentTime)}
+                </CustomText>
               </View>
 
-              <View style={styles.bottomButtonRow}>
-                <TouchableOpacity
-                  onPress={handleStartBreak}
-                  style={[
-                    styles.actionButton,
-                    styles.startBreakButton,
-                    (!isCheckedIn || isOnBreak) && styles.disabledButton
-                  ]}
-                  disabled={!isCheckedIn || isOnBreak}
-                >
-                  <Feather name="coffee" size={20} color={Colors.white} />
-                  <CustomText style={styles.buttonText}>Start Break</CustomText>
-                </TouchableOpacity>
+          
+              {/* Total Today */}
+              <View style={styles.totalSection}>
+                <CustomText style={styles.totalLabel}>Total Today:  </CustomText>
+                <CustomText style={styles.totalTime}>
+                  {isCheckedIn 
+                    ? calculateTimeDifference(currentCheckInTime, currentTime) 
+                    : totalWorkingHours}
+                </CustomText>
+              </View>
 
-                <TouchableOpacity
-                  onPress={handleEndBreak}
-                  style={[
-                    styles.actionButton,
-                    styles.endBreakButton,
-                    !isOnBreak && styles.disabledButton
-                  ]}
-                  disabled={!isOnBreak}
-                >
-                  <Feather name="coffee" size={20} color={Colors.white} />
-                  <CustomText style={styles.buttonText}>End Break</CustomText>
-                </TouchableOpacity>
+              {/* Divider */}
+              {/* <View style={styles.sectionDivider} /> */}
+
+              {/* Action Buttons */}
+              <View style={styles.buttonsSection}>
+                {/* Check In/Out Row */}
+                <View style={styles.buttonRow}>
+                  <View style={styles.buttonSection}>
+                    {/* <CustomText style={styles.sectionLabel}>Check In</CustomText> */}
+                    <TouchableOpacity
+                      onPress={handleCheckIn}
+                      style={[
+                        styles.actionButton,
+                        styles.checkInButton,
+                        isCheckedIn && styles.disabledButton
+                      ]}
+                      disabled={isCheckedIn}
+                    >
+                      <Feather name="log-in" size={20} color={Colors.white} />
+                      <CustomText style={styles.buttonText}>Check In</CustomText>
+                    </TouchableOpacity>
+                  </View>
+                  
+                  <View style={styles.buttonDivider} />
+                  
+                  <View style={styles.buttonSection}>
+                    {/* <CustomText style={styles.sectionLabel}>Check Out</CustomText> */}
+                    <TouchableOpacity
+                      onPress={handleCheckOut}
+                      style={[
+                        styles.actionButton,
+                        styles.checkOutButton,
+                        !isCheckedIn && styles.disabledButton
+                      ]}
+                      disabled={!isCheckedIn}
+                    >
+                      <Feather name="log-out" size={20} color={Colors.white} />
+                      <CustomText style={styles.buttonText}>Check Out</CustomText>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                
+                {/* Divider */}
+                <View style={styles.rowDivider} />
+                
+                {/* Break Buttons Row */}
+                <View style={styles.buttonRow}>
+                  <View style={styles.buttonSection}>
+                    {/* <CustomText style={styles.sectionLabel}>Start Break</CustomText> */}
+                    <TouchableOpacity
+                      onPress={handleStartBreak}
+                      style={[
+                        styles.actionButton,
+                        styles.startBreakButton,
+                        (!isCheckedIn || isOnBreak) && styles.disabledButton
+                      ]}
+                      disabled={!isCheckedIn || isOnBreak}
+                    >
+                      <Feather name="coffee" size={20} color={Colors.white} />
+                      <CustomText style={styles.buttonText}>Start Break</CustomText>
+                    </TouchableOpacity>
+                  </View>
+                  
+                  <View style={styles.buttonDivider} />
+                  
+                  <View style={styles.buttonSection}>
+                    {/* <CustomText style={styles.sectionLabel}>End Break</CustomText> */}
+                    <TouchableOpacity
+                      onPress={handleEndBreak}
+                      style={[
+                        styles.actionButton,
+                        styles.endBreakButton,
+                        !isOnBreak && styles.disabledButton
+                      ]}
+                      disabled={!isOnBreak}
+                    >
+                      <Feather name="coffee" size={20} color={Colors.white} />
+                      <CustomText style={styles.buttonText}>End Break</CustomText>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              {/* Divider */}
+              <View style={styles.sectionDivider} />
+
+              {/* Time Breakdown */}
+              <View style={styles.breakdownSection}>
+                <View style={styles.breakdownRow}>
+                  <View style={styles.breakdownItem}>
+                    <CustomText style={styles.breakdownLabel}>Work Time</CustomText>
+                    <CustomText style={styles.breakdownTime}>
+                      {isCheckedIn 
+                        ? calculateTimeDifference(currentCheckInTime, currentTime) 
+                        : totalWorkingHours}
+                    </CustomText>
+                  </View>
+                  
+                  <View style={styles.breakdownDivider} />
+                  
+                  <View style={styles.breakdownItem}>
+                    <CustomText style={styles.breakdownLabel}>Break Time</CustomText>
+                    <CustomText style={[styles.breakdownTime, {color: '#FF9800'}]}>
+                      {isOnBreak 
+                        ? calculateTimeDifference(currentBreakStartTime, currentTime) 
+                        : totalBreakTime}
+                    </CustomText>
+                  </View>
+                </View>
               </View>
             </View>
           </Animatable.View>
@@ -314,17 +376,20 @@ const Home = () => {
           <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
             <AttendanceList attendanceRecords={attendanceRecords} />
           </Animatable.View>
-
+          
           {/* Horizontal Cards */}
           <Animatable.View animation={"fadeInUp"} duration={600} delay={800}>
             <HorizontalCards />
           </Animatable.View>
-
+          
           {/* Previous Jobs */}
+          <View style={{paddingBottom:moderateScale(50)}}>
           <Animatable.View animation={"fadeInUp"} duration={600} delay={1000}>
             <PreviousJobs />
           </Animatable.View>
+          </View>
         </View>
+
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
@@ -338,6 +403,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: moderateScale(15),
+    // marginBottom:moderateScale(35),
     paddingHorizontal: moderateScale(5),
   },
   backButton: {
@@ -351,49 +417,28 @@ const styles = StyleSheet.create({
   profileButton: {
     padding: moderateScale(8),
   },
-  clockContainer: {
-    backgroundColor: Colors.white,
-    borderRadius: moderateScale(15),
-    padding: moderateScale(25),
+  statusContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: moderateScale(10),
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 6,
+    justifyContent: 'center',
   },
-  currentTimeText: {
-    fontSize: moderateScale(36),
-    fontWeight: 'bold',
-    color: '#6f60bf',
-    marginBottom: moderateScale(8),
-    letterSpacing: 2,
+  statusContainer1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  currentDateText: {
+  statusIndicator: {
+    width: moderateScale(12),
+    height: moderateScale(12),
+    borderRadius: moderateScale(6),
+    marginRight: moderateScale(8),
+  },
+  statusText: {
     fontSize: moderateScale(16),
-    color: Colors.black,
-    opacity: 0.7,
-    textAlign: 'center',
-  },
-  workingHoursText: {
-    fontSize: moderateScale(14),
-    color: '#4CAF50',
     fontWeight: '600',
-    marginTop: moderateScale(10),
-    textAlign: 'center',
   },
-  breakTimeText: {
-    fontSize: moderateScale(14),
-    color: '#FF9800',
-    fontWeight: '600',
-    marginTop: moderateScale(5),
-    textAlign: 'center',
-  },
-  buttonContainer: {
+  // Combined Container Styles
+  combinedContainer: {
     backgroundColor: Colors.white,
     borderRadius: moderateScale(15),
     padding: moderateScale(20),
@@ -407,45 +452,124 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 6,
   },
-  topButtonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: moderateScale(15),
-    gap: moderateScale(10),
+  clockSection: {
+    alignItems: 'center',
+    paddingVertical: moderateScale(10),
   },
-  bottomButtonRow: {
+  totalSection: {
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent:'center'
+    // paddingVertical: moderateScale(10),
+  },
+  buttonsSection: {
+    paddingVertical: moderateScale(30),
+  },
+  breakdownSection: {
+    paddingVertical: moderateScale(10),
+  },
+  sectionDivider: {
+    height: 1,
+    backgroundColor: '#eee',
+    marginVertical: moderateScale(10),
+  },
+  currentTimeText: {
+    fontSize: moderateScale(36),
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: moderateScale(4),
+  },
+  currentDateText: {
+    fontSize: moderateScale(14),
+    color: '#666',
+    textAlign: 'center',
+  },
+  totalLabel: {
+    fontSize: moderateScale(20),
+    fontWeight: 'bold',
+    color: 'blue',
+    // marginBottom: moderateScale(8),
+  },
+  totalTime: {
+    fontSize: moderateScale(20),
+    fontWeight: 'bold',
+    color: 'blue',
+  },
+  buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: moderateScale(10),
+  },
+  buttonSection: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  sectionLabel: {
+    fontSize: moderateScale(14),
+    color: '#666',
+    marginBottom: moderateScale(12),
+    textAlign: 'center',
+  },
+  buttonDivider: {
+    width: 1,
+    backgroundColor: '#eee',
+    marginHorizontal: moderateScale(10),
+  },
+  rowDivider: {
+    height: 1,
+    backgroundColor: '#eee',
+    marginVertical: moderateScale(20),
   },
   actionButton: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(16),
     borderRadius: moderateScale(8),
-    gap: moderateScale(8),
+    minWidth: moderateScale(120),
   },
   checkInButton: {
     backgroundColor: '#4CAF50',
   },
   checkOutButton: {
-    backgroundColor: '#FF5722',
+    backgroundColor: '#F44336',
   },
   startBreakButton: {
     backgroundColor: '#FF9800',
   },
   endBreakButton: {
-    backgroundColor: '#795548',
+    backgroundColor: 'blue',
   },
   disabledButton: {
-    backgroundColor: Colors.gray,
-    opacity: 0.5,
+    backgroundColor: '#ccc',
+    opacity: 0.7,
   },
   buttonText: {
     fontSize: moderateScale(14),
     fontWeight: '600',
     color: Colors.white,
+    marginLeft: moderateScale(8),
+  },
+  breakdownRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  breakdownItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  breakdownLabel: {
+    fontSize: moderateScale(14),
+    color: '#666',
+    marginBottom: moderateScale(8),
+  },
+  breakdownTime: {
+    fontSize: moderateScale(18),
+    fontWeight: 'bold',
+    color: '#4CAF50',
+  },
+  breakdownDivider: {
+    width: 1,
+    backgroundColor: '#eee',
   },
 });
