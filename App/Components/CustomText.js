@@ -5,7 +5,7 @@ import Colors from '../utils/Colors';
 
 const CustomText = ({ children, style, ...props }) => {
   return (
-    <Text style={[styles.defaultStyle, style]} {...props}>
+    <Text allowFontScaling={false} style={[styles.defaultStyle, style]} {...props}>
       {children}
     </Text>
   );

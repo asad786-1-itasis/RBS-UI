@@ -155,6 +155,7 @@ const SignUp = () => {
                   placeholder={t("fullName")}
                   value={fullName}
                   onChangeText={setFullName}
+                  allowFontScaling={false}
                 />
                 <CustomText
                   style={{
@@ -178,6 +179,7 @@ const SignUp = () => {
                   value={phoneNumber}
                   keyboardType="phone-pad"
                   onChangeText={setPhoneNumber}
+                  allowFontScaling={false}
                 />
                 <CustomText
                   style={{
@@ -200,6 +202,7 @@ const SignUp = () => {
                   placeholder={t("email")}
                   value={email}
                   onChangeText={setEmail}
+                  allowFontScaling={false}
                 />
 
                 <CustomText
@@ -231,6 +234,7 @@ const SignUp = () => {
                     value={password}
                     secureTextEntry={showPassword ? false : true}
                     onChangeText={setPassword}
+                    allowFontScaling={false}
                   />
                   <TouchableOpacity onPress={handleShowPass}>
                     <Feather

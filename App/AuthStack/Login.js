@@ -23,11 +23,11 @@ import { setLogin, setLoginData } from "../Redux/AuthReducer/authSlice";
 import CustomStatusBar from "../utils/CustomStatusBar";
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
-import Endpoints from "../API/Endpoints";
-import { POSTAPICALLFORMDATA } from "../API/ApiCalling";
+// import Endpoints from "../API/Endpoints";
+// import { POSTAPICALLFORMDATA } from "../API/ApiCalling";
 import { useCustomToast } from "../utils/ToastNofticiation";
 import Loader from "../utils/Loader";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setSelectedLanguage } from "../Redux/HomeReducer/homeSlice";
 import { t, setAppLanguage } from "../Languages/translations";
 // import FastImage from 'react-native-fast-image'
@@ -41,11 +41,11 @@ const Login = () => {
   // AED
   // const [email, setEmail] = useState("haiderbadsha@yopmail.com");
   // const [password, setPassword] = useState("123456");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // USD
-  const [email, setEmail] = useState("hg1@yopmail.com");
-  const [password, setPassword] = useState("abc123");
+  // const [email, setEmail] = useState("hg1@yopmail.com");
+  // const [password, setPassword] = useState("abc123");
 
   const selectedLanguage = useSelector((state) => state.home.selectedLanguage);
 
@@ -77,33 +77,33 @@ const Login = () => {
 
   const handleLogin = async () => {
     if (validateFields()) {
-      try {
-        setLoading(true);
-        let formData = new FormData();
-        formData.append("Email", email);
-        formData.append("Password", password);
-        formData.append("Role", "user");
-        console.log("formData Login >>>>>>>>", formData);
-        POSTAPICALLFORMDATA(
-          Endpoints.EndpointsaccountSignIn,
-          formData,
-          false
-        ).then((result) => {
-          console.log("Response handleLogin >>>>>>>>>>>>", result);
-          if (result?.success == true) {
-            // showToast('Login Successfull');
-            setLoading(false);
-            dispatch(setLoginData(result?.data));
-            dispatch(setLogin(true));
-          } else {
-            showToast(result?.message);
-            setLoading(false);
-          }
-        });
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
+      // try {
+      //   setLoading(true);
+      //   let formData = new FormData();
+      //   formData.append("Email", email);
+      //   formData.append("Password", password);
+      //   formData.append("Role", "user");
+      //   console.log("formData Login >>>>>>>>", formData);
+      //   POSTAPICALLFORMDATA(
+      //     Endpoints.EndpointsaccountSignIn,
+      //     formData,
+      //     false
+      //   ).then((result) => {
+      //     console.log("Response handleLogin >>>>>>>>>>>>", result);
+      //     if (result?.success == true) {
+      //       // showToast('Login Successfull');
+      //       setLoading(false);
+      //       dispatch(setLoginData(result?.data));
+      dispatch(setLogin(true));
+      //     } else {
+      //       showToast(result?.message);
+      //       setLoading(false);
+      //     }
+      //   });
+      // } catch (error) {
+      //   setLoading(false);
+      //   console.log(error);
+      // }
     }
   };
 
@@ -157,6 +157,7 @@ const Login = () => {
                   placeholder={t("emailAddress")}
                   value={email}
                   onChangeText={setEmail}
+                  allowFontScaling={false}   // 👈 yahan add kar do
                 />
                 <CustomText
                   style={{
@@ -187,6 +188,7 @@ const Login = () => {
                     value={password}
                     secureTextEntry={showPassword ? false : true}
                     onChangeText={setPassword}
+                    allowFontScaling={false}
                   />
                   <TouchableOpacity onPress={handleShowPass}>
                     <Feather
@@ -225,6 +227,23 @@ const Login = () => {
                 </TouchableOpacity>
               </Animatable.View>
             </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FaceFingure')}
+              style={styles.signUpButton}
+            >
+              <CustomText
+                style={{
+                  fontSize: moderateScale(14),
+                  paddingVertical: moderateScale(10),
+                  fontWeight: "700",
+                  color: Colors.black,
+                  paddingLeft: 5,
+                  textAlign: "center",
+                }}
+              >
+                {t("loginWithFaceFingure")}
+              </CustomText>
+            </TouchableOpacity>
             <View style={{ flex: 0.4, justifyContent: "flex-end", }}>
               <View style={styles.textContainer}>
                 <CustomText
@@ -251,12 +270,18 @@ const Login = () => {
                     {t("signUp")}
                   </CustomText>
                 </TouchableOpacity>
+
               </View>
+
+
+
             </View>
+
+
           </View>
         </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
@@ -317,5 +342,15 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16),
     color: '#6f60bf',
     fontWeight: '500'
+  },
+  signUpButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 2,
+    flex: 1,
+    justifyContent: "center",
+    borderColor: Colors.BtnClr,
+    borderRadius: moderateScale(10),
+    marginTop: moderateScale(20),
   }
 });

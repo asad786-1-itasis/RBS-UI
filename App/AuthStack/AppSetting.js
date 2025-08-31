@@ -149,6 +149,11 @@ const AppSetting = () => {
                                             nestedScrollEnabled: true,
                                             persistentScrollbar: true,
                                         }}
+                                        textStyle={{
+                                            fontSize: moderateScale(14),
+                                            allowFontScaling: false, // 👈 yaha add karo
+                                        }}
+
                                     />
                                 </View>
                                 <TouchableOpacity
@@ -167,7 +172,7 @@ const AppSetting = () => {
                         <View style={{ flex: 0.4, justifyContent: "flex-end", zIndex: -100 }}>
                             <View style={styles.textContainer}>
                                 <TouchableOpacity
-                                    onPress={() => navigation.goBack()}
+                                    onPress={() => navigation.navigate('SignUp')}
                                     style={styles.signUpButton}
                                 >
                                     <CustomText
@@ -177,7 +182,6 @@ const AppSetting = () => {
                                             fontWeight: "700",
                                             color: Colors.BtnClr,
                                             paddingLeft: 5,
-
                                         }}
                                     >
                                         {t("signUp")}
