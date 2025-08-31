@@ -119,8 +119,8 @@ const AttendanceList = ({ attendanceRecords }) => {
       <View style={styles.headerContainer}>
         <CustomText style={styles.headerTitle}>Today's Activity</CustomText>
         <TouchableOpacity style={styles.viewAllButton}>
-          <CustomText style={styles.viewAllText}>View All</CustomText>
-          <Feather name="arrow-right" size={16} color="#6f60bf" />
+          <CustomText style={styles.viewAllText}>4 Task</CustomText>
+          {/* <Feather name="arrow-right" size={16} color="#6f60bf" /> */}
         </TouchableOpacity>
       </View>
 
@@ -132,7 +132,7 @@ const AttendanceList = ({ attendanceRecords }) => {
           showsVerticalScrollIndicator={true}
           ListEmptyComponent={renderEmptyComponent}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          style={{ height: moderateScale(280) }}
+          // style={{ height: moderateScale(280) }}
           nestedScrollEnabled={true}   // 👈 ye add karo
         />
       </View>
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   listContainer: {
     backgroundColor: Colors.white,
     borderRadius: moderateScale(15),
-    padding: moderateScale(15),
+    padding: moderateScale(10),
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

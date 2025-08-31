@@ -272,13 +272,13 @@ export default PreviousJobs;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: moderateScale(20),
+    marginVertical: moderateScale(10),
   },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: moderateScale(15),
+    marginBottom: moderateScale(10),
     paddingHorizontal: moderateScale(5),
   },
   headerTitle: {
@@ -289,8 +289,8 @@ const styles = StyleSheet.create({
   filtersButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: moderateScale(15),
-    paddingVertical: moderateScale(8),
+    // paddingHorizontal: moderateScale(5),
+    // paddingVertical: moderateScale(8),
   },
   filtersText: {
     fontSize: moderateScale(14),
@@ -300,8 +300,8 @@ const styles = StyleSheet.create({
   filtersContainer: {
     backgroundColor: Colors.white,
     borderRadius: moderateScale(15),
-    padding: moderateScale(20),
-    marginBottom: moderateScale(15),
+    padding: moderateScale(10),
+    marginBottom: moderateScale(8),
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: moderateScale(20),
-    gap: moderateScale(15),
+    gap: moderateScale(5),
   },
   filterSection: {
     flex: 1,
@@ -377,10 +377,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(5),
   },
   jobCard: {
-    width: width * 0.65, // ✅ Card ki width badh gayi (65%)
+    width: width * 0.65,
     borderRadius: moderateScale(12),
-    padding: moderateScale(16),
-    height: moderateScale(300),
+    padding: moderateScale(10),
+    height: moderateScale(230),
     justifyContent: 'space-between',
     shadowColor: "#000",
     shadowOffset: {
@@ -399,8 +399,8 @@ const styles = StyleSheet.create({
     marginBottom: moderateScale(12),
   },
   iconContainer: {
-    width: moderateScale(35),
-    height: moderateScale(35),
+    width: moderateScale(50),
+    height: moderateScale(50),
     borderRadius: moderateScale(8),
     backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
@@ -450,7 +450,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewDetailsText: {
-    fontSize: moderateScale(12),
+    fontSize: moderateScale(14),
     color: Colors.white,
     fontWeight: '600',
   },

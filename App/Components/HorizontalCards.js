@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
+  ViewBase,
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import Colors from '../utils/Colors';
@@ -101,13 +102,9 @@ const getProgressWidth = (itemId) => {
             <CustomText style={styles.iconText}>{item.icon}</CustomText>
           </View>
           
-          <TouchableOpacity style={styles.bookmarkRight}>
-            <Feather 
-              name="bookmark" 
-              size={16} 
-              color="#E0E0E0"
-            />
-          </TouchableOpacity>
+          <View style={styles.bookmarkRight}>
+          
+          </View>
         </View>
 
         {/* Task Title */}
@@ -191,7 +188,7 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(10),
   },
   listContent: {
-    paddingHorizontal: moderateScale(10),
+    paddingHorizontal: moderateScale(5),
   },
   cardContainer: {
     shadowColor: "#000",
@@ -206,24 +203,24 @@ const styles = StyleSheet.create({
   taskCard: {
     width: width * 0.65,
     borderRadius: moderateScale(12),
-    padding: moderateScale(20),
-    height: moderateScale(250),
+    padding: moderateScale(15),
+    // height: moderateScale(250),
     justifyContent: 'space-between',
   },
   cardSeparator: {
-    width: moderateScale(15),
+    width: moderateScale(10),
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: moderateScale(15),
+    marginBottom: moderateScale(10),
   },
   bookmarkLeft: {
-    padding: moderateScale(2),
+    // padding: moderateScale(2),
   },
   bookmarkRight: {
-    padding: moderateScale(2),
+    // padding: moderateScale(2),
   },
   iconContainer: {
     width: moderateScale(45),
@@ -245,20 +242,20 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(22),
   },
   titleContainer: {
-    marginBottom: moderateScale(15),
+    marginBottom: moderateScale(12),
   },
   taskTitle: {
     fontSize: moderateScale(16),
     fontWeight: 'bold',
     color: Colors.black,
     textAlign: 'center',
-    lineHeight: moderateScale(20),
+    // lineHeight: moderateScale(20),
   },
   timeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: moderateScale(15),
+    marginBottom: moderateScale(12),
   },
   timeIconContainer: {
     width: moderateScale(20),
@@ -273,7 +270,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   progressContainer: {
-    marginBottom: moderateScale(15),
+    marginBottom: moderateScale(10),
   },
   progressBar: {
     height: moderateScale(6),

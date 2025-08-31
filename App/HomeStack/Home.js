@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: moderateScale(15),
+    paddingVertical: moderateScale(10),
     // marginBottom:moderateScale(35),
     paddingHorizontal: moderateScale(5),
   },
@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
   combinedContainer: {
     backgroundColor: Colors.white,
     borderRadius: moderateScale(15),
-    padding: moderateScale(20),
+    padding: moderateScale(2),
     marginVertical: moderateScale(10),
     shadowColor: "#000",
     shadowOffset: {
@@ -454,30 +454,30 @@ const styles = StyleSheet.create({
   },
   clockSection: {
     alignItems: 'center',
-    paddingVertical: moderateScale(10),
+    paddingVertical: moderateScale(2),
   },
   totalSection: {
     flexDirection:'row',
     alignItems: 'center',
-    justifyContent:'center'
-    // paddingVertical: moderateScale(10),
+    justifyContent:'center',
+    paddingVertical: moderateScale(3),
   },
   buttonsSection: {
-    paddingVertical: moderateScale(30),
+    paddingVertical: moderateScale(10),
   },
   breakdownSection: {
-    paddingVertical: moderateScale(10),
+    paddingBottom: moderateScale(10),
   },
   sectionDivider: {
     height: 1,
     backgroundColor: '#eee',
-    marginVertical: moderateScale(10),
+    marginVertical: moderateScale(2),
   },
   currentTimeText: {
     fontSize: moderateScale(36),
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: moderateScale(4),
+    
   },
   currentDateText: {
     fontSize: moderateScale(14),
@@ -503,21 +503,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  sectionLabel: {
-    fontSize: moderateScale(14),
-    color: '#666',
-    marginBottom: moderateScale(12),
-    textAlign: 'center',
-  },
+  // sectionLabel: {
+  //   fontSize: moderateScale(14),
+  //   color: '#666',
+  //   marginBottom: moderateScale(120),
+  //   textAlign: 'center',
+  // },
   buttonDivider: {
     width: 1,
     backgroundColor: '#eee',
     marginHorizontal: moderateScale(10),
   },
   rowDivider: {
-    height: 1,
-    backgroundColor: '#eee',
-    marginVertical: moderateScale(20),
+    // height: 1,
+    // backgroundColor: '#eee',
+    marginVertical: moderateScale(10),
   },
   actionButton: {
     flexDirection: 'row',
@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScale(12),
     paddingHorizontal: moderateScale(16),
     borderRadius: moderateScale(8),
-    minWidth: moderateScale(120),
+    minWidth: '86%',
   },
   checkInButton: {
     backgroundColor: '#4CAF50',
@@ -561,7 +561,6 @@ const styles = StyleSheet.create({
   breakdownLabel: {
     fontSize: moderateScale(14),
     color: '#666',
-    marginBottom: moderateScale(8),
   },
   breakdownTime: {
     fontSize: moderateScale(18),
