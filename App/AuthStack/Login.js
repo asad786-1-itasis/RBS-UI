@@ -23,11 +23,11 @@ import { setLogin, setLoginData } from "../Redux/AuthReducer/authSlice";
 import CustomStatusBar from "../utils/CustomStatusBar";
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
-// import Endpoints from "../API/Endpoints";
-// import { POSTAPICALLFORMDATA } from "../API/ApiCalling";
+import Endpoints from "../API/Endpoints";
+import { POSTAPICALLFORMDATA } from "../API/ApiCalling";
 import { useCustomToast } from "../utils/ToastNofticiation";
 import Loader from "../utils/Loader";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setSelectedLanguage } from "../Redux/HomeReducer/homeSlice";
 import { t, setAppLanguage } from "../Languages/translations";
 // import FastImage from 'react-native-fast-image'
@@ -77,33 +77,33 @@ const Login = () => {
 
   const handleLogin = async () => {
     if (validateFields()) {
-      // try {
-      //   setLoading(true);
-      //   let formData = new FormData();
-      //   formData.append("Email", email);
-      //   formData.append("Password", password);
-      //   formData.append("Role", "user");
-      //   console.log("formData Login >>>>>>>>", formData);
-      //   POSTAPICALLFORMDATA(
-      //     Endpoints.EndpointsaccountSignIn,
-      //     formData,
-      //     false
-      //   ).then((result) => {
-      //     console.log("Response handleLogin >>>>>>>>>>>>", result);
-      //     if (result?.success == true) {
-      //       // showToast('Login Successfull');
-      //       setLoading(false);
-      //       dispatch(setLoginData(result?.data));
+      try {
+        setLoading(true);
+        let formData = new FormData();
+        formData.append("Email", email);
+        formData.append("Password", password);
+        formData.append("Role", "user");
+        console.log("formData Login >>>>>>>>", formData);
+        POSTAPICALLFORMDATA(
+          Endpoints.EndpointsaccountSignIn,
+          formData,
+          false
+        ).then((result) => {
+          console.log("Response handleLogin >>>>>>>>>>>>", result);
+          if (result?.success == true) {
+            // showToast('Login Successfull');
+            setLoading(false);
+            dispatch(setLoginData(result?.data));
             dispatch(setLogin(true));
-      //     } else {
-      //       showToast(result?.message);
-      //       setLoading(false);
-      //     }
-      //   });
-      // } catch (error) {
-      //   setLoading(false);
-      //   console.log(error);
-      // }
+          } else {
+            showToast(result?.message);
+            setLoading(false);
+          }
+        });
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     }
   };
 
