@@ -18,11 +18,12 @@ import { useCustomToast } from "../utils/ToastNofticiation";
 import AttendanceList from "../Components/AttendanceList";
 import HorizontalCards from "../Components/HorizontalCards";
 import PreviousJobs from "../Components/PreviousJobs";
+import CustomStatusBar from "../utils/CustomStatusBar";
 
 const Home = () => {
   let navigation = useNavigation();
   let { showToast } = useCustomToast();
-  
+
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const [isOnBreak, setIsOnBreak] = useState(false);
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -44,11 +45,11 @@ const Home = () => {
 
   // Get formatted time with seconds
   const getFormattedTime = (date = new Date()) => {
-    return date.toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit', 
+    return date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
       second: '2-digit',
-      hour12: false 
+      hour12: false
     });
   };
 
@@ -84,7 +85,7 @@ const Home = () => {
     setCurrentCheckInTime(now);
     setStatusText("Checked In");
     setStatusColor("#4CAF50");
-    
+
     const newRecord = {
       id: Date.now().toString(),
       type: 'checkin',
@@ -107,7 +108,7 @@ const Home = () => {
 
     const now = new Date();
     const workingHours = calculateTimeDifference(currentCheckInTime, now);
-    
+
     setIsCheckedIn(false);
     setIsOnBreak(false);
     setCurrentCheckInTime(null);
@@ -170,7 +171,7 @@ const Home = () => {
 
     const now = new Date();
     const breakDuration = calculateTimeDifference(currentBreakStartTime, now);
-    
+
     setIsOnBreak(false);
     setCurrentBreakStartTime(null);
     setTotalBreakTime(breakDuration);
@@ -193,6 +194,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={[CustomStyle.SafeAreaStyle, {}]}>
+      <CustomStatusBar />
       <KeyboardAwareScrollView
         style={{
           flex: 1,
@@ -216,7 +218,7 @@ const Home = () => {
               >
                 <Feather name="arrow-left" size={24} color={Colors.black} />
               </TouchableOpacity>
-       
+
               <TouchableOpacity style={styles.profileButton}>
                 <Feather name="user" size={24} color={Colors.black} />
               </TouchableOpacity>
@@ -228,7 +230,7 @@ const Home = () => {
             <View style={styles.statusContainer1}>
               <CustomText style={styles.headerTitle}>Employee Time Clock</CustomText>
               <View style={styles.statusContainer}>
-                <View style={[styles.statusIndicator, {backgroundColor: statusColor}]} />
+                <View style={[styles.statusIndicator, { backgroundColor: statusColor }]} />
                 <CustomText style={styles.statusText}>{statusText}</CustomText>
               </View>
             </View>
@@ -237,7 +239,7 @@ const Home = () => {
           {/* Combined Container - Clock, Total Today, Buttons, and Time Breakdown */}
           <Animatable.View animation={"fadeInUp"} duration={600} delay={200}>
             <View style={styles.combinedContainer}>
-              
+
               {/* Clock Display */}
               <View style={styles.clockSection}>
                 <CustomText style={styles.currentTimeText}>
@@ -248,13 +250,13 @@ const Home = () => {
                 </CustomText>
               </View>
 
-          
+
               {/* Total Today */}
               <View style={styles.totalSection}>
                 <CustomText style={styles.totalLabel}>Total Today:  </CustomText>
                 <CustomText style={styles.totalTime}>
-                  {isCheckedIn 
-                    ? calculateTimeDifference(currentCheckInTime, currentTime) 
+                  {isCheckedIn
+                    ? calculateTimeDifference(currentCheckInTime, currentTime)
                     : totalWorkingHours}
                 </CustomText>
               </View>
@@ -281,9 +283,9 @@ const Home = () => {
                       <CustomText style={styles.buttonText}>Check In</CustomText>
                     </TouchableOpacity>
                   </View>
-                  
+
                   <View style={styles.buttonDivider} />
-                  
+
                   <View style={styles.buttonSection}>
                     {/* <CustomText style={styles.sectionLabel}>Check Out</CustomText> */}
                     <TouchableOpacity
@@ -300,10 +302,10 @@ const Home = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
-                
+
                 {/* Divider */}
                 <View style={styles.rowDivider} />
-                
+
                 {/* Break Buttons Row */}
                 <View style={styles.buttonRow}>
                   <View style={styles.buttonSection}>
@@ -321,9 +323,9 @@ const Home = () => {
                       <CustomText style={styles.buttonText}>Start Break</CustomText>
                     </TouchableOpacity>
                   </View>
-                  
+
                   <View style={styles.buttonDivider} />
-                  
+
                   <View style={styles.buttonSection}>
                     {/* <CustomText style={styles.sectionLabel}>End Break</CustomText> */}
                     <TouchableOpacity
@@ -351,19 +353,19 @@ const Home = () => {
                   <View style={styles.breakdownItem}>
                     <CustomText style={styles.breakdownLabel}>Work Time</CustomText>
                     <CustomText style={styles.breakdownTime}>
-                      {isCheckedIn 
-                        ? calculateTimeDifference(currentCheckInTime, currentTime) 
+                      {isCheckedIn
+                        ? calculateTimeDifference(currentCheckInTime, currentTime)
                         : totalWorkingHours}
                     </CustomText>
                   </View>
-                  
+
                   <View style={styles.breakdownDivider} />
-                  
+
                   <View style={styles.breakdownItem}>
                     <CustomText style={styles.breakdownLabel}>Break Time</CustomText>
-                    <CustomText style={[styles.breakdownTime, {color: '#FF9800'}]}>
-                      {isOnBreak 
-                        ? calculateTimeDifference(currentBreakStartTime, currentTime) 
+                    <CustomText style={[styles.breakdownTime, { color: '#FF9800' }]}>
+                      {isOnBreak
+                        ? calculateTimeDifference(currentBreakStartTime, currentTime)
                         : totalBreakTime}
                     </CustomText>
                   </View>
@@ -376,17 +378,17 @@ const Home = () => {
           <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
             <AttendanceList attendanceRecords={attendanceRecords} />
           </Animatable.View>
-          
+
           {/* Horizontal Cards */}
           <Animatable.View animation={"fadeInUp"} duration={600} delay={800}>
             <HorizontalCards />
           </Animatable.View>
-          
+
           {/* Previous Jobs */}
-          <View style={{paddingBottom:moderateScale(50)}}>
-          <Animatable.View animation={"fadeInUp"} duration={600} delay={1000}>
-            <PreviousJobs />
-          </Animatable.View>
+          <View style={{ paddingBottom: moderateScale(50) }}>
+            <Animatable.View animation={"fadeInUp"} duration={600} delay={1000}>
+              <PreviousJobs />
+            </Animatable.View>
           </View>
         </View>
 
@@ -457,9 +459,9 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScale(2),
   },
   totalSection: {
-    flexDirection:'row',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     paddingVertical: moderateScale(3),
   },
   buttonsSection: {
@@ -477,7 +479,7 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(36),
     fontWeight: 'bold',
     color: '#333',
-    
+
   },
   currentDateText: {
     fontSize: moderateScale(14),

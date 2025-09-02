@@ -262,11 +262,11 @@ function BottomNavigation() {
 }
 
 const getRouteName = (route) => {
-  // if(route?.name ==='WishListStack'){
-  //   return 'none'
-  // }
+  if(route?.name ==='Chat'){
+    return 'none'
+  }
   const routeName = getFocusedRouteNameFromRoute(route);
-  //   console.log('routeName>>>>>>>>>>>>>>>>>>>>', routeName);
+    console.log('routeName>>>>>>>>>>>>>>>>>>>>', routeName);
   if (
     routeName?.includes("OrderHistory") ||
     routeName?.includes("RateApp") ||
