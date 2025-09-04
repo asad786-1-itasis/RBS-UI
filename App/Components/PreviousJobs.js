@@ -272,7 +272,10 @@ export default PreviousJobs;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: moderateScale(10),
+    // marginVertical: moderateScale(10),
+    marginVertical: moderateScale(20),
+    paddingHorizontal: moderateScale(15),
+
   },
   headerContainer: {
     flexDirection: 'row',
@@ -282,6 +285,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(5),
   },
   headerTitle: {
+     marginVertical: moderateScale(10),
     fontSize: moderateScale(18),
     fontWeight: 'bold',
     color: Colors.black,
@@ -301,7 +305,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: moderateScale(15),
     padding: moderateScale(10),
-    marginBottom: moderateScale(8),
+    marginBottom: moderateScale(15),
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -380,7 +384,7 @@ const styles = StyleSheet.create({
     width: width * 0.65,
     borderRadius: moderateScale(12),
     padding: moderateScale(10),
-    height: moderateScale(230),
+    // height: moderateScale(230),
     justifyContent: 'space-between',
     shadowColor: "#000",
     shadowOffset: {

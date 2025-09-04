@@ -1,6 +1,6 @@
 // Constants.js
 export const Colors = {
-  background: '#e1e8ff',
+  background: '#ffffff',
   primary: '#e5e7eb',
   BtnClr: '#2563eb',
   activeClr: '#2563eb',

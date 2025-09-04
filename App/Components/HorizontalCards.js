@@ -1,163 +1,134 @@
-import React, { useRef } from 'react';
+// ... all previous imports
+import React from 'react';
 import {
   View,
   StyleSheet,
   FlatList,
   TouchableOpacity,
   Dimensions,
-  ViewBase,
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import Colors from '../utils/Colors';
 import CustomText from './CustomText';
-import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 
 const { width } = Dimensions.get('window');
 
 const HorizontalCards = () => {
-  // Task cards data matching the image
-  const tasksData = [
+  const projects = [
     {
       id: '1',
-      title: 'Foundation Work',
-      timeStatus: '2h 15m remaining',
-      icon: '🏗️',
-      bgColor: '#E8F0FF',
-      buttonColor: '#4A90E2',
-      buttonText: 'View Details',
-      statusType: 'remaining',
-      statusColor: '#FF9800',
-      bookmarkIcon: true,
+      title: 'Downtown Office Complex',
+      subtitle: 'Foundation work - Block A',
+      assignedBy: 'Mike Johnson',
+      completedTasks: 3,
+      totalTasks: 5,
+      percentage: 60,
+      icon: '🏢',
+      status: 'Active',
+      statusColor: '#FFECB3',
+      borderColor: '#FFA726',
+      progressColor: '#1976D2',
     },
     {
       id: '2',
-      title: 'Site Safety Check',
-      timeStatus: '45m remaining',
-      icon: '🦺',
-      bgColor: '#E8F5E8',
-      buttonColor: '#50C878',
-      buttonText: 'View Details',
-      statusType: 'remaining',
-      statusColor: '#4CAF50',
-      bookmarkIcon: false,
+      title: 'Residential Complex',
+      subtitle: 'Electrical installation - Unit 12',
+      assignedBy: 'Sarah Davis',
+      completedTasks: 0,
+      totalTasks: 4,
+      percentage: 0,
+      icon: '⚡',
+      status: 'Pending',
+      statusColor: '#E3F2FD',
+      borderColor: '#42A5F5',
+      progressColor: '#BDBDBD',
     },
     {
       id: '3',
-      title: 'Material Delivery',
-      timeStatus: 'Overdue by 30m',
-      icon: '📦',
-      bgColor: '#FFE8E8',
-      buttonColor: '#E74C3C',
-      buttonText: 'View Details',
-      statusType: 'overdue',
-      statusColor: '#E74C3C',
-      bookmarkIcon: true,
+      title: 'Highway Bridge Repair',
+      subtitle: 'Safety inspection report',
+      assignedBy: 'Tom Wilson',
+      completedTasks: 5,
+      totalTasks: 5,
+      percentage: 100,
+      icon: '📄',
+      status: 'Completed',
+      statusColor: '#C8E6C9',
+      borderColor: '#66BB6A',
+      progressColor: '#2E7D32',
     },
     {
       id: '4',
-      title: 'Scaffolding Setup',
-      timeStatus: '4h 30m remaining',
-      icon: '🏗️',
-      bgColor: '#FFF8E1',
-      buttonColor: '#F39C12',
-      buttonText: 'View Details',
-      statusType: 'remaining',
-      statusColor: '#2196F3',
-      bookmarkIcon: false,
+      title: 'Residential Complex',
+      subtitle: 'Electrical installation - Unit 12',
+      assignedBy: 'Sarah Davis',
+      completedTasks: 0,
+      totalTasks: 4,
+      percentage: 0,
+      icon: '⚡',
+      status: 'Pending',
+      statusColor: '#E3F2FD',
+      borderColor: '#42A5F5',
+      progressColor: '#BDBDBD',
     },
   ];
 
-
-// Component ke andar
-const progressCache = useRef({}); // ✅ useRef use karo
-
-const getProgressWidth = (itemId) => {
-  if (!progressCache.current[itemId]) {
-    progressCache.current[itemId] = `${Math.random() * 70 + 30}%`;
-  }
-  return progressCache.current[itemId];
-};
-
-  const renderTaskCard = ({ item, index }) => (
+  const renderProject = ({ item, index }) => (
     <Animatable.View
       animation="fadeInUp"
       duration={500}
       delay={index * 100}
-      style={styles.cardContainer}
+      style={[styles.cardContainer, { borderLeftColor: item.borderColor }]}
     >
-      <View style={[styles.taskCard, { backgroundColor: item.bgColor }]}>
-        {/* Header with bookmark icons */}
-        <View style={styles.cardHeader}>
-          <TouchableOpacity style={styles.bookmarkLeft}>
-            <Feather 
-              name="bookmark" 
-              size={16} 
-              color={item.bookmarkIcon ? '#FF9800' : '#E0E0E0'} 
-              fill={item.bookmarkIcon ? '#FF9800' : 'transparent'}
-            />
-          </TouchableOpacity>
-          
-          <View style={styles.iconContainer}>
-            <CustomText style={styles.iconText}>{item.icon}</CustomText>
-          </View>
-          
-          <View style={styles.bookmarkRight}>
-          
-          </View>
+      {/* Top Row */}
+      <View style={styles.topRow}>
+        <View style={styles.iconContainer}>
+          <CustomText style={styles.iconText}>{item.icon}</CustomText>
         </View>
 
-        {/* Task Title */}
-        <View style={styles.titleContainer}>
-          <CustomText style={styles.taskTitle} numberOfLines={2}>
-            {item.title}
+        <View style={{ flex: 1, paddingHorizontal: moderateScale(10) }}>
+          <CustomText style={styles.title}>{item.title}</CustomText>
+          <CustomText style={styles.subtitle}>{item.subtitle}</CustomText>
+          <CustomText style={styles.assignedBy}>
+            Assigned by: {item.assignedBy}
           </CustomText>
         </View>
 
-        {/* Time Status with Icon */}
-        <View style={styles.timeContainer}>
-          <View style={[styles.timeIconContainer, { backgroundColor: item.statusColor }]}>
-            <Feather 
-              name={item.statusType === 'overdue' ? 'alert-circle' : 'clock'} 
-              size={12} 
-              color={Colors.white} 
-            />
-          </View>
-          <CustomText 
+        <View style={[styles.statusBadge, { backgroundColor: item.statusColor }]}>
+          <CustomText style={styles.statusText}>{item.status}</CustomText>
+        </View>
+      </View>
+
+      {/* Progress Info */}
+      <View style={styles.progressTextRow}>
+        <CustomText style={styles.tasksCompletedText}>
+          {item.completedTasks}/{item.totalTasks} tasks completed
+        </CustomText>
+        <CustomText style={styles.percentageText}>{item.percentage}%</CustomText>
+      </View>
+
+      {/* Progress Bar */}
+      <View style={styles.progressBarContainer}>
+        <View style={styles.progressBarBackground}>
+          <View
             style={[
-              styles.timeText, 
-              { 
-                color: item.statusType === 'overdue' ? item.statusColor : item.statusColor 
-              }
+              styles.progressBarFill,
+              {
+                width: `${item.percentage}%`,
+                backgroundColor: item.progressColor,
+              },
             ]}
-          >
-            {item.timeStatus}
-          </CustomText>
+          />
         </View>
+      </View>
 
-        {/* Progress Bar */}
-        <View style={styles.progressContainer}>
-        <View style={styles.progressContainer}>
-          <View style={styles.progressBar}>
-            <View 
-              style={[
-                styles.progressFill, 
-                { 
-                  backgroundColor: item.buttonColor,
-                  width: item.statusType === 'overdue' ? '100%' : getProgressWidth(item.id)
-                }
-              ]} 
-            />
-          </View>
-        </View>
-</View>
-
-        {/* View Details Button */}
-        <TouchableOpacity 
-          style={[styles.viewButton, { backgroundColor: item.buttonColor }]}
-          activeOpacity={0.8}
+      {/* Bottom Right Button */}
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity
+          style={[styles.viewButton, { backgroundColor: item.progressColor }]}
         >
-          <CustomText style={styles.viewButtonText}>{item.buttonText}</CustomText>
+          <CustomText style={styles.viewButtonText}>View Details</CustomText>
         </TouchableOpacity>
       </View>
     </Animatable.View>
@@ -165,18 +136,16 @@ const getProgressWidth = (itemId) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={tasksData}
-        renderItem={renderTaskCard}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
-        ItemSeparatorComponent={() => <View style={styles.cardSeparator} />}
-        decelerationRate="fast"
-        snapToInterval={width * 0.65 + moderateScale(30)}
-        snapToAlignment="start"
-      />
+      <View style={styles.scrollableList}>
+        <FlatList
+          data={projects}
+          renderItem={renderProject}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}
+        />
+      </View>
     </View>
   );
 };
@@ -185,112 +154,106 @@ export default HorizontalCards;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: moderateScale(10),
+    paddingHorizontal: moderateScale(15),
+   
   },
-  listContent: {
-    paddingHorizontal: moderateScale(5),
+  scrollableList: {
+    maxHeight: moderateScale(450), // Enable scrolling
+    
   },
   cardContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  taskCard: {
-    width: width * 0.65,
+    backgroundColor: '#fff',
     borderRadius: moderateScale(12),
-    padding: moderateScale(15),
-    // height: moderateScale(250),
-    justifyContent: 'space-between',
+    padding: moderateScale(12),
+    borderLeftWidth: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 1.4,
   },
-  cardSeparator: {
-    width: moderateScale(10),
-  },
-  cardHeader: {
+  topRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: moderateScale(10),
-  },
-  bookmarkLeft: {
-    // padding: moderateScale(2),
-  },
-  bookmarkRight: {
-    // padding: moderateScale(2),
   },
   iconContainer: {
-    width: moderateScale(45),
-    height: moderateScale(45),
-    borderRadius: moderateScale(12),
-    backgroundColor: 'rgba(255,255,255,0.8)',
+    width: moderateScale(40),
+    height: moderateScale(40),
+    borderRadius: moderateScale(8),
+    backgroundColor: 'rgba(0,0,0,0.05)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
   },
   iconText: {
-    fontSize: moderateScale(22),
+    fontSize: moderateScale(20),
   },
-  titleContainer: {
-    marginBottom: moderateScale(12),
-  },
-  taskTitle: {
-    fontSize: moderateScale(16),
+  title: {
+    fontSize: moderateScale(14),
     fontWeight: 'bold',
-    color: Colors.black,
-    textAlign: 'center',
-    // lineHeight: moderateScale(20),
+    color: '#212121',
   },
-  timeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: moderateScale(12),
-  },
-  timeIconContainer: {
-    width: moderateScale(20),
-    height: moderateScale(20),
-    borderRadius: moderateScale(10),
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: moderateScale(8),
-  },
-  timeText: {
+  subtitle: {
     fontSize: moderateScale(12),
-    fontWeight: '600',
+    color: '#555',
+    marginTop: 2,
   },
-  progressContainer: {
-    marginBottom: moderateScale(10),
+  assignedBy: {
+    fontSize: moderateScale(11),
+    color: '#888',
+    marginTop: 2,
   },
-  progressBar: {
-    height: moderateScale(6),
-    backgroundColor: 'rgba(0,0,0,0.1)',
-    borderRadius: moderateScale(3),
+  statusBadge: {
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(4),
+    borderRadius: moderateScale(12),
+  },
+  statusText: {
+    fontSize: moderateScale(10),
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  progressTextRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: moderateScale(10),
+  },
+  tasksCompletedText: {
+    fontSize: moderateScale(11),
+    color: '#444',
+  },
+  percentageText: {
+    fontSize: moderateScale(11),
+    color: '#444',
+    fontWeight: 'bold',
+  },
+  progressBarContainer: {
+    marginTop: moderateScale(6),
+  },
+  progressBarBackground: {
+    height: 6,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 3,
     overflow: 'hidden',
   },
-  progressFill: {
+  progressBarFill: {
     height: '100%',
-    borderRadius: moderateScale(3),
+    borderRadius: 3,
+  },
+  buttonWrapper: {
+    alignItems: 'flex-end',
+    marginTop: moderateScale(10),
   },
   viewButton: {
+    paddingHorizontal: moderateScale(12),
+    paddingVertical: moderateScale(6),
     borderRadius: moderateScale(8),
-    paddingVertical: moderateScale(12),
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   viewButtonText: {
-    fontSize: moderateScale(14),
-    color: Colors.white,
+    fontSize: moderateScale(12),
+    color: '#fff',
     fontWeight: '600',
+  },
+  separator: {
+    height: moderateScale(15),
   },
 });

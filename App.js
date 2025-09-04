@@ -85,6 +85,7 @@ import LanguageTranslator from "./App/LanguageTranslator";
 import AppSetting from "./App/AuthStack/AppSetting";
 import FaceFingure from "./App/AuthStack/FaceFingure";
 
+
 const Stack = createStackNavigator();
 
 function AuthStack() {
@@ -116,7 +117,7 @@ function AuthStack() {
         name="SignUp"
         component={SignUp}
       />
-
+      
       {/*
       
      
