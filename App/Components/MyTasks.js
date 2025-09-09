@@ -18,7 +18,7 @@ const { width } = Dimensions.get("window");
 const initialTasks = [
   {
     id: "1",
-    title: "Site Preparation",
+    title: "Site Preparationsss",
     subtitle: "Downtown Office Complex",
     status: "Completed",
     statusColor: "#C6F6D5",

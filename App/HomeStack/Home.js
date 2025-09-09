@@ -14,20 +14,25 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import { useCustomToast } from "../utils/ToastNofticiation";
-import AttendanceList from "../Components/AttendanceList";
-import HorizontalCards from "../Components/HorizontalCards";
+import AttendanceList from "../Components/TaskOverView";
 import PreviousJobs from "../Components/PreviousJobs";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MyTasks from "../Components/MyTasks";
 import Invoice from "../Components/Invoice";
 import ProfileScreen from "../Components/ProfileScreen";
 import RecentActivityScreen from "../Components/RecentActivityScreen";
+import AssignTask from "../TaskStack/AssignTask";
+import TaskOverview from "../Components/TaskOverView";
+
 const Home = () => {
   let navigation = useNavigation();
   let { showToast } = useCustomToast();
 
   const [isCheckedIn, setIsCheckedIn] = useState(false);
 
+  const goToProfile = () => {
+    navigation.navigate("ProfileScreen"); 
+  };
   // Handle Check In
   const handleCheckIn = () => {
     if (isCheckedIn) {
@@ -67,7 +72,7 @@ const Home = () => {
               <CustomText style={styles.userName}>John Smith</CustomText>
             </View>
 
-            <TouchableOpacity style={styles.profileButton}>
+            <TouchableOpacity onPress={goToProfile} style={styles.profileButton}>
               <Feather name="user" size={24} color={Colors.white} />
             </TouchableOpacity>
           </View>
@@ -144,90 +149,14 @@ const Home = () => {
             </TouchableOpacity>
           </View>
         </Animatable.View>
-
-
-
-
-
-
-
-
-
         {/* Today overview */}
-
         <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
-          <AttendanceList />
+          <TaskOverview />
         </Animatable.View>
-
-
-        {/* ////////////////////////////////// */}
-
-
         {/* RecentActivityScreen */}
-        
       <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
       <RecentActivityScreen/>
       </Animatable.View>
-
-
-        {/* //////////////////////////////////// */}
-
-        {/* Asign project */}
-
-        <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
-          <CustomText style={styles.heading}>Assigned Projects</CustomText>
-        </Animatable.View>
-        <Animatable.View animation={"fadeInUp"} duration={600} delay={800}>
-          <HorizontalCards />
-        </Animatable.View>
-
-        {/* ////////////////////////// */}
-
-        {/* My Task */}
-        <Animatable.View animation={"fadeInUp"} duration={600} delay={800}>
-          <MyTasks />
-        </Animatable.View>
-
-        {/* //////////////////// */}
-
-        {/* Invoice */}
-        <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
-          <Invoice />
-        </Animatable.View>
-
-
-
-
-
-
-
-        {/* //////////////////////////////////// */}
-
-        {/* Previous Jobs */}
-        <View>
-          <Animatable.View animation={"fadeInUp"} duration={600} delay={1000}>
-            <PreviousJobs />
-          </Animatable.View>
-        </View>
-
-
-
-
-
-        {/* /////////////////////////// */}
-
-
-
-        {/* profile */}
-
-        <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
-        <ProfileScreen/>
-      </Animatable.View>
-
-
-
-
-
       </KeyboardAwareScrollView>
     </SafeAreaView >
   );

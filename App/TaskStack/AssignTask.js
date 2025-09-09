@@ -5,16 +5,19 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Dimensions,
+  ScrollView,
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-import Colors from '../utils/Colors';
-import CustomText from './CustomText';
 import * as Animatable from 'react-native-animatable';
+import CustomText from '../Components/CustomText';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native'; 
+import Colors from '../utils/Colors';
+import CustomStyle from '../utils/CustomStyle';
 
-const { width } = Dimensions.get('window');
+const AssignTask = () => {
+  const navigation = useNavigation();
 
-const HorizontalCards = () => {
   const projects = [
     {
       id: '1',
@@ -74,6 +77,10 @@ const HorizontalCards = () => {
     },
   ];
 
+  const handleViewDetails = (item) => {
+    navigation.navigate("TaskDetails", { task: item });
+  };
+
   const renderProject = ({ item, index }) => (
     <Animatable.View
       animation="fadeInUp"
@@ -87,7 +94,7 @@ const HorizontalCards = () => {
           <CustomText style={styles.iconText}>{item.icon}</CustomText>
         </View>
 
-        <View style={{ flex: 1, paddingHorizontal: moderateScale(10) }}>
+        <View style={styles.projectInfo}>
           <CustomText style={styles.title}>{item.title}</CustomText>
           <CustomText style={styles.subtitle}>{item.subtitle}</CustomText>
           <CustomText style={styles.assignedBy}>
@@ -114,18 +121,16 @@ const HorizontalCards = () => {
           <View
             style={[
               styles.progressBarFill,
-              {
-                width: `${item.percentage}%`,
-                backgroundColor: item.progressColor,
-              },
+              { width: `${item.percentage}%`, backgroundColor: item.progressColor },
             ]}
           />
         </View>
       </View>
 
-      {/* Bottom Right Button */}
+      {/* Button */}
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
+          onPress={() => handleViewDetails(item)}
           style={[styles.viewButton, { backgroundColor: item.progressColor }]}
         >
           <CustomText style={styles.viewButtonText}>View Details</CustomText>
@@ -135,32 +140,36 @@ const HorizontalCards = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.scrollableList}>
-        <FlatList
-          data={projects}
-          renderItem={renderProject}
-          keyExtractor={(item) => item.id}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          showsVerticalScrollIndicator={false}
-          nestedScrollEnabled={true}
-        />
-      </View>
-    </View>
+    <SafeAreaView
+    style={[
+      CustomStyle.SafeAreaStyle,
+      { flex: 1, backgroundColor: Colors.background },
+    ]}
+  >
+    <Animatable.View animation="fadeInUp" duration={600} delay={600}>
+      <CustomText style={styles.heading}>Assigned Projectss</CustomText>
+    </Animatable.View>
+  
+    <FlatList
+      data={projects}
+      renderItem={renderProject}
+      keyExtractor={(item) => item.id}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{
+        paddingHorizontal: moderateScale(15),
+        paddingBottom: moderateScale(80), // 👈 yahan bottom tab ke liye space
+        paddingTop: moderateScale(20),
+      }}
+    />
+  </SafeAreaView>
+  
   );
 };
 
-export default HorizontalCards;
+export default AssignTask;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: moderateScale(15),
-   
-  },
-  scrollableList: {
-    maxHeight: moderateScale(450), // Enable scrolling
-    
-  },
   cardContainer: {
     backgroundColor: '#fff',
     borderRadius: moderateScale(12),
@@ -168,9 +177,9 @@ const styles = StyleSheet.create({
     borderLeftWidth: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 1.4,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   topRow: {
     flexDirection: 'row',
@@ -186,6 +195,10 @@ const styles = StyleSheet.create({
   },
   iconText: {
     fontSize: moderateScale(20),
+  },
+  projectInfo: {
+    flex: 1,
+    paddingHorizontal: moderateScale(10),
   },
   title: {
     fontSize: moderateScale(14),
@@ -255,5 +268,11 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: moderateScale(15),
+  },
+  heading: {
+    fontSize: moderateScale(20),
+    fontWeight: 'bold',
+    marginVertical: moderateScale(20),
+    marginLeft: moderateScale(15),
   },
 });

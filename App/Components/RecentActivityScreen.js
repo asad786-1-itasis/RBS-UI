@@ -27,19 +27,19 @@ const activities = [
         dotColor: "#3B82F6", // blue
         textColor: "#1E40AF",
     },
-    // {
-    //     id: "3",
-    //     title: "Inspection Scheduled",
-    //     time: "Yesterday",
-    //     bgColor: "#FEF3C7", // light yellow
-    //     dotColor: "#F59E0B", // yellow
-    //     textColor: "#92400E",
-    // },
+    {
+        id: "3",
+        title: "Inspection Scheduled",
+        time: "Yesterday",
+        bgColor: "#FEF3C7", // light yellow
+        dotColor: "#F59E0B", // yellow
+        textColor: "#92400E",
+    },
 ];
 
 const RecentActivityScreen = () => {
     const renderItem = ({ item }) => (
-        <View style={{}}>
+        <View >
             <View style={[styles.card, { backgroundColor: item.bgColor }]}>
                 {/* Dot */}
                 <View style={[styles.dot, { backgroundColor: item.dotColor }]} />
@@ -81,13 +81,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#F9FAFB",
         margin: moderateScale(15),
+       
 
     },
     ucard: {
         backgroundColor: "white",
         padding: moderateScale(15),
         borderRadius: moderateScale(12), // corner round
-   
+        marginBottom:moderateScale(60),
       
         // iOS shadow
         shadowColor: "#000",

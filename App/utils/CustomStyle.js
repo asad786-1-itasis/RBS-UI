@@ -18,6 +18,7 @@ const CustomStyle = StyleSheet.create({
   SafeAreaStyle: {
     flex: 1,
     backgroundColor: Colors.white,
+    
   },
   FullButton: {
     justifyContent: 'center',
