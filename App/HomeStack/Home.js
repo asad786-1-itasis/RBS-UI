@@ -19,7 +19,9 @@ import HorizontalCards from "../Components/HorizontalCards";
 import PreviousJobs from "../Components/PreviousJobs";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MyTasks from "../Components/MyTasks";
-
+import Invoice from "../Components/Invoice";
+import ProfileScreen from "../Components/ProfileScreen";
+import RecentActivityScreen from "../Components/RecentActivityScreen";
 const Home = () => {
   let navigation = useNavigation();
   let { showToast } = useCustomToast();
@@ -147,18 +149,59 @@ const Home = () => {
 
 
 
+
+
+
+
+        {/* Today overview */}
+
         <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
           <AttendanceList />
         </Animatable.View>
 
+
+        {/* ////////////////////////////////// */}
+
+
+        {/* RecentActivityScreen */}
+        
+      <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
+      <RecentActivityScreen/>
+      </Animatable.View>
+
+
+        {/* //////////////////////////////////// */}
+
+        {/* Asign project */}
+
         <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
           <CustomText style={styles.heading}>Assigned Projects</CustomText>
         </Animatable.View>
-
-
         <Animatable.View animation={"fadeInUp"} duration={600} delay={800}>
           <HorizontalCards />
         </Animatable.View>
+
+        {/* ////////////////////////// */}
+
+        {/* My Task */}
+        <Animatable.View animation={"fadeInUp"} duration={600} delay={800}>
+          <MyTasks />
+        </Animatable.View>
+
+        {/* //////////////////// */}
+
+        {/* Invoice */}
+        <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
+          <Invoice />
+        </Animatable.View>
+
+
+
+
+
+
+
+        {/* //////////////////////////////////// */}
 
         {/* Previous Jobs */}
         <View>
@@ -166,9 +209,23 @@ const Home = () => {
             <PreviousJobs />
           </Animatable.View>
         </View>
-        <Animatable.View animation={"fadeInUp"} duration={600} delay={800}>
-          <MyTasks />
-        </Animatable.View>
+
+
+
+
+
+        {/* /////////////////////////// */}
+
+
+
+        {/* profile */}
+
+        <Animatable.View animation={"fadeInUp"} duration={600} delay={600}>
+        <ProfileScreen/>
+      </Animatable.View>
+
+
+
 
 
       </KeyboardAwareScrollView>
@@ -247,7 +304,8 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: moderateScale(20),
-    marginHorizontal: moderateScale(15),
+    marginHorizontal: moderateScale(30),
+
     fontWeight: "bold",
     marginVertical: moderateScale(20),
 

@@ -1,7 +1,7 @@
 // Constants.js
 export const Colors = {
   background: '#ffffff',
-  primary: '#e5e7eb',
+  primary: '#000',
   BtnClr: '#2563eb',
   activeClr: '#2563eb',
   white: 'white',

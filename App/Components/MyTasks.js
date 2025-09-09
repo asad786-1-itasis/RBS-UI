@@ -24,12 +24,16 @@ const initialTasks = [
     statusColor: "#C6F6D5",
     statusTextColor: "#276749",
     taskTitle: "Site survey and soil testing",
-    priority: "🔥 HIGH PRIORITY",
+    priority: "🔥 HIGH ",
     description:
       "Comprehensive site survey including topographical mapping and soil composition analysis for foundation planning.",
     progressStatus: "Completed",
     date: "Nov 20, 2025",
     progressDotColor: "#276749",
+    completedTasks: 5,
+    totalTasks: 5,
+    percentage: 100,
+    progressColor: "#276749",
   },
   {
     id: "2",
@@ -38,13 +42,18 @@ const initialTasks = [
     status: "In Progress",
     statusColor: "#FFF9DB",
     statusTextColor: "#D69E2E",
+
     taskTitle: "Install wiring and outlets",
-    priority: "",
+    priority: "Medium",
     description:
       "Install wiring and outlets across all units as per electrical plans.",
     progressStatus: "In Progress",
     date: "Oct 15, 2025",
     progressDotColor: "#D69E2E",
+    completedTasks: 7,
+    totalTasks: 10,
+    percentage: 70,
+    progressColor: "#D69E2E",
   },
   {
     id: "3",
@@ -54,12 +63,16 @@ const initialTasks = [
     statusColor: "#FED7D7",
     statusTextColor: "#9B2C2C",
     taskTitle: "Pour concrete and cure",
-    priority: "",
+    priority: "Critical",
     description:
       "Pour concrete foundation and allow to cure as per structural guidelines.",
     progressStatus: "Pending",
     date: "Dec 5, 2025",
     progressDotColor: "#9B2C2C",
+    completedTasks: 3,
+    totalTasks: 10,
+    percentage: 30,
+    progressColor: "#9B2C2C",
   },
 ];
 
@@ -78,13 +91,16 @@ const MyTasks = () => {
       prevTasks.map((task) =>
         task.id === selectedTaskId
           ? {
-              ...task,
-              status: "Completed",
-              statusColor: "#C6F6D5",
-              statusTextColor: "#276749",
-              progressStatus: "Completed",
-              progressDotColor: "#276749",
-            }
+            ...task,
+            status: "Completed",
+            statusColor: "#C6F6D5",
+            statusTextColor: "#276749",
+            progressStatus: "Completed",
+            progressDotColor: "#276749",
+            percentage: 100,
+            completedTasks: task.totalTasks,
+            progressColor: "#276749",
+          }
           : task
       )
     );
@@ -144,16 +160,52 @@ const MyTasks = () => {
             { backgroundColor: lightenColor(item.statusColor, 0.7) },
           ]}
         >
-          <CustomText style={styles.taskTitle}>{item.taskTitle}</CustomText>
-          {item.priority ? (
+          
+
+
+          <View style={styles.bottomRow}>
+
+
+            <CustomText style={styles.date}>Due: {item.date}</CustomText>
             <View style={styles.priorityContainer}>
               <CustomText style={styles.priorityText}>{item.priority}</CustomText>
             </View>
-          ) : null}
+          </View>
+
+          {/* Progress Info */}
+          <View style={styles.progressTextRow}>
+            <CustomText style={styles.tasksCompletedText}>
+              {item.completedTasks}/{item.totalTasks} tasks completed
+            </CustomText>
+            <CustomText style={styles.percentageText}>
+              {item.percentage}%
+            </CustomText>
+          </View>
+
+          {/* Progress Bar - FIXED: Added animation and proper styling */}
+          <View style={styles.progressBarContainer}>
+            <View style={styles.progressBarBackground}>
+              <Animatable.View
+                animation="fadeInRight"
+                duration={800}
+                style={[
+                  styles.progressBarFill,
+                  {
+                    width: `${item.percentage}%`,
+                    backgroundColor: item.progressColor,
+                  },
+                ]}
+              />
+            </View>
+          </View>
+
+          <CustomText style={styles.taskTitle}>{item.taskTitle}</CustomText>
+
+
 
           <CustomText style={styles.description}>{item.description}</CustomText>
 
-          <View style={styles.bottomRow}>
+          {/* <View style={styles.bottomRow}>
             <View style={styles.progressStatus}>
               <View
                 style={[
@@ -172,7 +224,7 @@ const MyTasks = () => {
             </View>
 
             <CustomText style={styles.date}>{item.date}</CustomText>
-          </View>
+          </View> */}
         </View>
 
         {/* Complete Button */}
@@ -193,9 +245,6 @@ const MyTasks = () => {
 
   return (
     <View style={styles.container}>
-      {/* Blue Header */}
-     
-
       {/* Task List */}
       <FlatList
         data={tasks}
@@ -256,29 +305,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  headerTop: {
-    backgroundColor: "#1E63EE",
-    paddingVertical: moderateScale(25),
-    paddingHorizontal: moderateScale(20),
-    borderBottomLeftRadius: moderateScale(20),
-    borderBottomRightRadius: moderateScale(20),
-  },
-  headerGreeting: {
-    fontSize: moderateScale(20),
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  headerName: {
-    fontSize: moderateScale(16),
-    color: "#E0E0E0",
-    marginTop: 4,
-  },
   card: {
     backgroundColor: "#fff",
     borderRadius: moderateScale(12),
     padding: moderateScale(15),
     marginBottom: moderateScale(15),
-
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
@@ -320,16 +351,17 @@ const styles = StyleSheet.create({
   },
   detailContainer: {
     borderRadius: moderateScale(12),
-    padding: moderateScale(15),
+    // padding: moderateScale(15),
   },
   taskTitle: {
     fontWeight: "bold",
     fontSize: moderateScale(15),
+    marginTop: moderateScale(10),
     marginBottom: moderateScale(6),
     color: "#111827",
   },
   priorityContainer: {
-    backgroundColor: "#FED7D7",
+    // backgroundColor: "#FED7D7",
     paddingHorizontal: moderateScale(8),
     paddingVertical: moderateScale(4),
     borderRadius: moderateScale(8),
@@ -345,9 +377,38 @@ const styles = StyleSheet.create({
     color: "#374151",
     marginBottom: moderateScale(15),
   },
+  progressTextRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: moderateScale(10),
+  },
+  tasksCompletedText: {
+    fontSize: moderateScale(11),
+    color: "#444",
+  },
+  percentageText: {
+    fontSize: moderateScale(11),
+    color: "#444",
+    fontWeight: "bold",
+  },
+  progressBarContainer: {
+    marginTop: moderateScale(6),
+  },
+  progressBarBackground: {
+    height: 6,
+    backgroundColor: "#E0E0E0",
+    borderRadius: 3,
+    overflow: "hidden",
+  },
+  progressBarFill: {
+    height: "100%",
+    borderRadius: 3,
+  },
   bottomRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    // marginTop: moderateScale(10),
+    alignItems:'center'
   },
   progressStatus: {
     flexDirection: "row",
@@ -422,7 +483,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary || "#276749",
   },
   confirmButtonText: {
-    color: "#000",
+    color: "#fff",
     fontWeight: "600",
   },
 });

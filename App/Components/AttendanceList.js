@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(5),
   },
   heading:{
+    paddingHorizontal: moderateScale(15),
      fontSize: moderateScale(20),
         fontWeight: "bold",
         // color: Colors.white,
